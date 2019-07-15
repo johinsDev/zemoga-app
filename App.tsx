@@ -5,6 +5,7 @@ import { View } from 'native-base'
 import { cacheImages } from './src/utils/cacheImages'
 import images from './src/theme/images'
 import Navigation from './src/navigation'
+import { ListProvider } from './src/modules/posts/list/store/reducer'
 
 export default function App() {
   const [isReady, setIsReady] = React.useState()
@@ -33,7 +34,11 @@ export default function App() {
     )
   }
 
-  return <Navigation />
+  return (
+    <ListProvider>
+      <Navigation />
+    </ListProvider>
+  )
 }
 
 const styles = StyleSheet.create({
