@@ -2,6 +2,7 @@ import {
   createStackNavigator,
   createSwitchNavigator,
   createAppContainer,
+  createMaterialTopTabNavigator,
 } from 'react-navigation'
 
 const PostStack = createStackNavigator({
