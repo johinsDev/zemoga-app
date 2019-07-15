@@ -7,6 +7,15 @@ import {
 const PostStack = createStackNavigator({
   ListPosts: {
     getScreen: () => require('./modules/posts/list/ListPostsView').default,
+    navigationOptions: {
+      header: null,
+    },
+  },
+  ShowPost: {
+    getScreen: () => require('./modules/posts/show/ShowPostView').default,
+    navigationOptions: {
+      header: null,
+    },
   },
 })
 
