@@ -4,21 +4,41 @@ import {
   createAppContainer,
   createMaterialTopTabNavigator,
 } from 'react-navigation'
+import * as React from 'react'
 
-const PostStack = createStackNavigator({
-  ListPosts: {
-    getScreen: () => require('./modules/posts/list/ListPostsView').default,
+import ListPostsView from './modules/posts/list/ListPostsView'
+import HeaderWithTabs from './modules/posts/shared/HeaderWithTabs'
+import ListFavoritesView from './modules/posts/favorites/ListFavoritesView'
+import ShowPostView from './modules/posts/show/ShowPostView'
+
+const PostTanTop = createMaterialTopTabNavigator(
+  {
+    ListPost: { screen: ListPostsView },
+    FavoroitesPosts: { screen: ListFavoritesView },
+  },
+  {
+    tabBarPosition: 'top',
+    swipeEnabled: true,
+    animationEnabled: true,
+    tabBarComponent: () => {
+      return <HeaderWithTabs />
+    },
+  }
+)
+
+const PostStack = createStackNavigator(
+  {
+    Tab: PostTanTop,
+    ShowPost: { screen: ShowPostView },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
     navigationOptions: {
       header: null,
     },
-  },
-  ShowPost: {
-    getScreen: () => require('./modules/posts/show/ShowPostView').default,
-    navigationOptions: {
-      header: null,
-    },
-  },
-})
+  }
+)
 
 const MainNavigator = createStackNavigator(
   {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import { View, Text } from 'native-base'
 import { Image } from 'react-native'
 
@@ -10,8 +10,8 @@ import { NavigationScreenProps } from 'react-navigation'
 function SplashScreen({ navigation }: NavigationScreenProps) {
   React.useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('ListPosts')
-    }, 1500)
+      navigation.navigate('ListPost')
+    }, 0)
   }, [])
 
   return (

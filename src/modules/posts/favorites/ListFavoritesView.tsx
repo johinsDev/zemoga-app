@@ -1,19 +1,14 @@
 import * as React from 'react'
-import { Container, View, Button, Icon } from 'native-base'
+import { Container, View } from 'native-base'
 import { FlatList, StyleSheet } from 'react-native'
 
-import Header from '../../shared/Header'
 import colors from '../../../theme/colors'
-import Tabs from '../../shared/Tabs'
-import DeleteAllButton from './ui/DeleteAllButton'
-import ItemPost from './ui/ItemPost'
-import { useList, IItem } from './store/reducer'
-import actions from './store/actions'
 import ListEmptyComponent from '../../shared/ListEmptyComponent'
-import FooterLoading from '../../shared/FooterLoading'
-import useFavorites from './store/useFavorites'
-
-const tabs = [{ title: 'ALL' }, { title: 'FAVORITES' }]
+import useFavorites from '../list/store/useFavorites'
+import { IItem, useList } from '../list/store/reducer'
+import actions from '../list/store/actions'
+import DeleteAllButton from '../list/ui/DeleteAllButton'
+import ItemPost from '../list/ui/ItemPost'
 
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +17,7 @@ const styles = StyleSheet.create({
   },
 })
 
-export default function ListPostsView() {
+export default function ListFavoritesView() {
   const [state, dispatch] = useList()
   const favorites = useFavorites()
 
@@ -34,29 +29,15 @@ export default function ListPostsView() {
     <ItemPost post={item} index={index} />
   )
 
-  const handleOnEndReached = React.useCallback(() => {
-    const { loading, totalPages, page } = state
-
-    if (!loading && page <= totalPages && totalPages > 1) {
-      dispatch({ type: 'INC_PAGE' })
-    }
-  }, [state.page, state.totalPages, state.loading])
-
-  const handleRefresh = React.useCallback(() => {
-    dispatch({ type: 'INIT_PAGE' })
-  }, [])
-
   const _listEmptyComponent = React.useCallback(() => {
     return <ListEmptyComponent />
   }, [state.loading])
-
-  const renderFooter = React.useCallback(() => <FooterLoading />, [])
 
   return (
     <Container style={{ backgroundColor: colors.background }}>
       <View style={{ flex: 1 }}>
         <FlatList
-          data={state.data}
+          data={favorites}
           style={styles.container}
           renderItem={renderItem}
           initialNumToRender={20}
@@ -64,14 +45,9 @@ export default function ListPostsView() {
           keyboardShouldPersistTaps="always"
           removeClippedSubviews={true}
           ListEmptyComponent={_listEmptyComponent}
-          ListFooterComponent={renderFooter}
-          refreshing={state.refreshing}
-          onRefresh={handleRefresh}
           keyExtractor={(item: IItem) => {
             return `item-${item.id}`
           }}
-          onEndReachedThreshold={0.7}
-          onEndReached={handleOnEndReached}
         />
       </View>
 
