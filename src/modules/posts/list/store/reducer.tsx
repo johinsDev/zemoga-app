@@ -10,6 +10,7 @@ export interface IState {
   page: number
   search?: string
   refreshing?: boolean
+  selectedTab: number
 }
 
 export interface IAction {
@@ -21,12 +22,14 @@ export interface IAction {
     | 'UPDATE_ITEM'
     | 'CLEAN_DATA'
     | 'REMOVE_ITEM'
+    | 'SET_SELECTED_TAB'
   data?: any[]
   totalPages?: number
   search?: string
   storeReferenceId?: string
   newDataItem?: {}
   index?: number
+  selectedTab?: number
 }
 
 export type Dispatch = (action: IAction) => void
@@ -68,6 +71,7 @@ const initialState = {
   totalPages: 1,
   page: 1,
   refreshing: false,
+  selectedTab: 0,
 }
 
 // CONTEXT
@@ -126,6 +130,12 @@ function listReducer(state: IState = initialState, action: IAction) {
       return {
         ...state,
         page: 1,
+      }
+    }
+    case 'SET_SELECTED_TAB': {
+      return {
+        ...state,
+        selectedTab: action.selectedTab,
       }
     }
     default: {

@@ -11,6 +11,7 @@ import { useList, IItem } from './store/reducer'
 import actions from './store/actions'
 import ListEmptyComponent from '../../shared/ListEmptyComponent'
 import FooterLoading from '../../shared/FooterLoading'
+import useFavorites from './store/useFavorites'
 
 const tabs = [{ title: 'ALL' }, { title: 'FAVORITES' }]
 
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
 
 export default function ListPostsView() {
   const [state, dispatch] = useList()
+  const favorites = useFavorites()
 
   React.useEffect(() => {
     actions.loadPosts(dispatch, state.page)
@@ -65,27 +67,48 @@ export default function ListPostsView() {
         }
       />
 
-      <Tabs tabs={tabs} />
+      <Tabs
+        tabs={tabs}
+        onChangeTab={({ i }) =>
+          dispatch({ type: 'SET_SELECTED_TAB', selectedTab: i })
+        }
+      />
 
       <View style={{ flex: 1 }}>
-        <FlatList
-          data={state.data}
-          style={styles.container}
-          renderItem={renderItem}
-          initialNumToRender={20}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="always"
-          removeClippedSubviews={true}
-          ListEmptyComponent={_listEmptyComponent}
-          ListFooterComponent={renderFooter}
-          refreshing={state.refreshing}
-          onRefresh={handleRefresh}
-          keyExtractor={(item: IItem) => {
-            return `item-${item.id}`
-          }}
-          onEndReachedThreshold={0.7}
-          onEndReached={handleOnEndReached}
-        />
+        {state.selectedTab !== 0 ? (
+          <FlatList
+            data={favorites}
+            style={styles.container}
+            renderItem={renderItem}
+            initialNumToRender={20}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="always"
+            removeClippedSubviews={true}
+            ListEmptyComponent={_listEmptyComponent}
+            keyExtractor={(item: IItem) => {
+              return `item-${item.id}`
+            }}
+          />
+        ) : (
+          <FlatList
+            data={state.data}
+            style={styles.container}
+            renderItem={renderItem}
+            initialNumToRender={20}
+            showsVerticalScrollIndicator={false}
+            keyboardShouldPersistTaps="always"
+            removeClippedSubviews={true}
+            ListEmptyComponent={_listEmptyComponent}
+            ListFooterComponent={renderFooter}
+            refreshing={state.refreshing}
+            onRefresh={handleRefresh}
+            keyExtractor={(item: IItem) => {
+              return `item-${item.id}`
+            }}
+            onEndReachedThreshold={0.7}
+            onEndReached={handleOnEndReached}
+          />
+        )}
       </View>
 
       <DeleteAllButton onPress={() => actions.removeAll(dispatch)} />
