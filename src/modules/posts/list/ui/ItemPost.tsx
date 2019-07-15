@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   starIcon: {
     color: colors.yellow,
     alignSelf: 'center',
+    fontSize: 14,
   },
   list: {
     minHeight: 90,
@@ -64,8 +65,8 @@ export function ItemPost({
 
   const goTo = React.useCallback(() => {
     actions.updateItem(dispatch, index, { read: true })
-    navigation.navigate('ShowPost', { post })
-  }, [post])
+    navigation.navigate('ShowPost', { post, index })
+  }, [post, index])
 
   const iosRightIcon = React.useMemo(
     () => (
@@ -81,6 +82,7 @@ export function ItemPost({
       <Button transparent={true}>
         <Icon
           name="star"
+          type="FontAwesome"
           style={[styles.starIcon, stylesStarIcon[Platform.OS]]}
         />
       </Button>

@@ -1,6 +1,6 @@
 import api from '../../../../api'
 
-function fetchPosts(url: string) {
+function fetch(url: string) {
   return api()
     .get(url)
     .then(respose => {
@@ -13,5 +13,5 @@ function fetchPosts(url: string) {
 }
 
 export const postService = {
-  fetchPosts,
+  fetch,
 }

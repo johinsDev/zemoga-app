@@ -51,7 +51,7 @@ async function loadPosts(dispatch: Dispatch, page: number) {
       })
     }
 
-    const res = await postService.fetchPosts(url)
+    const res = await postService.fetch(url)
 
     let data = pathOr([], ['data'], res)
     const totalPages = pathOr(0, ['headers', 'x-total-count'], res) / 20
@@ -134,10 +134,36 @@ async function updateItem(dispatch: Dispatch, index: number, newData: {}) {
   }
 }
 
+async function getUser(dispatch: Dispatch, userId: number, index: number) {
+  try {
+    const res = await postService.fetch(`/users/${userId}`)
+
+    const user = pathOr([], ['data'], res)
+
+    updateItem(dispatch, index, { user })
+  } catch (error) {
+    console.log('ERROR', error)
+  }
+}
+
+async function loadComments(dispatch: Dispatch, postId: number, index: number) {
+  try {
+    const res = await postService.fetch(`/posts/${postId}/comments?_page=1`)
+
+    const comments = pathOr([], ['data'], res)
+
+    updateItem(dispatch, index, { comments })
+  } catch (error) {
+    console.log('ERROR', error)
+  }
+}
+
 export default {
   loadPosts,
   refreshPosts,
   removeAll,
   removeItem,
   updateItem,
+  getUser,
+  loadComments,
 }

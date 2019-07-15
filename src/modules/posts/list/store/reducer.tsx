@@ -35,6 +35,14 @@ export interface IListProvider {
   children: React.ReactNode
 }
 
+export interface IComment {
+  postId: number
+  id: number
+  name: string
+  email: string
+  body: string
+}
+
 export interface IItem {
   body: string
   id: number
@@ -42,6 +50,14 @@ export interface IItem {
   userId: number
   read: boolean
   isFavorite?: boolean
+  user?: {
+    id: number
+    name: string
+    email: string
+    phone: string
+    website: string
+  }
+  comments?: IComment[]
 }
 
 // INITIAL STATE
