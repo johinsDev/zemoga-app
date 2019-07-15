@@ -138,11 +138,14 @@ export function ItemPost({
             <Left style={{ flexDirection: 'row', flex: 4 }}>
               {renderIcon()}
               <Text style={styles.text}>{pathOr('', ['title'], post)}</Text>
-              {pathOr(false, ['isFavorite'], post) &&
-                isPlatform({ platform: 'android', isComponent: starIcon })}
             </Left>
             <Right style={{ flex: 1 }}>
-              {isPlatform({ platform: 'ios', isComponent: iosRightIcon })}
+              {isPlatform({
+                platform: 'ios',
+                isComponent: iosRightIcon,
+              })}
+              {pathOr(false, ['isFavorite'], post) &&
+                isPlatform({ platform: 'android', isComponent: starIcon })}
             </Right>
           </View>
         </TouchableOpacity>

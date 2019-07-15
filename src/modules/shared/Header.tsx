@@ -8,6 +8,7 @@ import {
   Right,
   Body,
   NativeBase,
+  Text,
 } from 'native-base'
 import { StyleSheet, Platform } from 'react-native'
 import { withNavigation, NavigationScreenProps } from 'react-navigation'
@@ -46,7 +47,7 @@ function Header({
       noLeft={!leftComponent && !back}
       {...rest}
     >
-      <Left>
+      <Left style={{ flex: 1 }}>
         {leftComponent}
 
         {!back &&
@@ -68,7 +69,6 @@ function Header({
           isComponent: <Title style={styles.title}>{title}</Title>,
         })}
       </Body>
-
       <Right>{rightComponent}</Right>
     </HeaderNV>
   )

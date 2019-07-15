@@ -11,7 +11,7 @@ function SplashScreen({ navigation }: NavigationScreenProps) {
   React.useEffect(() => {
     setTimeout(() => {
       navigation.navigate('ListPosts')
-    }, 0)
+    }, 1500)
   }, [])
 
   return (

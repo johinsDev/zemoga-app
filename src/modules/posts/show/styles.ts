@@ -11,8 +11,9 @@ export const styles = StyleSheet.create({
   },
   commentCard: {
     borderColor: colors.darkBackground,
-    paddingLeft: Platform.OS === 'ios' ? 0 : 5,
-    paddingRight: Platform.OS === 'ios' ? 0 : 5,
+    paddingLeft: Platform.OS === 'ios' ? 0 : 15,
+    paddingRight: Platform.OS === 'ios' ? 0 : 15,
+    borderBottomWidth: 2,
   },
   comment: {
     color: colors.gray,
