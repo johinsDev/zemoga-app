@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { View, Left, Icon, Text, Right, SwipeRow, Button } from 'native-base'
-import { StyleSheet, Platform } from 'react-native'
+import { StyleSheet, Platform, Alert } from 'react-native'
+import pathOr from 'ramda/es/pathOr'
+import { NavigationScreenProps, withNavigation } from 'react-navigation'
 
 import colors from '../../../../theme/colors'
 import isPlatform from '../../../../utils/isPlatform'
 import { IItem, useList } from '../store/reducer'
-import pathOr from 'ramda/es/pathOr'
 import actions from '../store/actions'
-import { NavigationScreenProps, withNavigation } from 'react-navigation'
 
 const stylesStarIcon = StyleSheet.create({
   android: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
 const stylesLit = StyleSheet.create({
   android: {
-    backgroundColor: colors.transparent,
+    backgroundColor: colors.background,
   },
   ios: {
     backgroundColor: colors.white,
@@ -58,10 +58,21 @@ export function ItemPost({
 } & NavigationScreenProps) {
   const [_, dispatch] = useList()
 
-  const removeItem = React.useCallback(
-    () => actions.removeItem(dispatch, index),
-    [post]
-  )
+  const removeItem = React.useCallback(() => {
+    Alert.alert(
+      'Warning',
+      'Are you sure to delete this post?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => ({}),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => actions.removeItem(dispatch, index) },
+      ],
+      { cancelable: false }
+    )
+  }, [post])
 
   const goTo = React.useCallback(() => {
     actions.updateItem(dispatch, index, { read: true })

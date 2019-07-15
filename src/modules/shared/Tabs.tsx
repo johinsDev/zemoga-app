@@ -80,7 +80,11 @@ function Tabs({ tabs, ...rest }: ITabsProps) {
       const index = findIndex(propEq('title', title), tabs)
       const isLastIndex = index === tabs.length - 1
 
-      const tabStyles = isLastIndex ? tabStyle.borderRight : tabStyle.borderLeft
+      let tabStyles = {}
+
+      if (Platform.OS === 'ios') {
+        tabStyles = isLastIndex ? tabStyle.borderRight : tabStyle.borderLeft
+      }
 
       return (
         <Tab
