@@ -1,19 +1,46 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import * as React from 'react'
+import { StyleSheet, Text, ActivityIndicator } from 'react-native'
+import { View } from 'native-base'
+
+import { cacheImages } from './src/utils/cacheImages'
+import images from './src/theme/images'
+import Navigation from './src/navigation'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!!!</Text>
-    </View>
-  );
+  const [isReady, setIsReady] = React.useState()
+
+  React.useEffect(() => {
+    cacheAssets()
+  }, [])
+
+  const cacheAssets = async () => {
+    const imagesAssets = cacheImages([...Object.values(images)])
+
+    try {
+      await Promise.all([...imagesAssets])
+
+      setIsReady(true)
+    } catch (error) {
+      console.log('ERROR LOADING IMAGES')
+    }
+  }
+
+  if (!isReady) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    )
+  }
+
+  return <Navigation />
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+})
