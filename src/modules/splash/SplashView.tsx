@@ -10,7 +10,7 @@ import { NavigationScreenProps } from 'react-navigation'
 function SplashScreen({ navigation }: NavigationScreenProps) {
   React.useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('ShowPost')
+      navigation.navigate('ListPosts')
     }, 0)
   }, [])
 

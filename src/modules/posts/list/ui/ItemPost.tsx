@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ListItem, Left, Icon, Text, Right } from 'native-base'
+import { View, Left, Icon, Text, Right, SwipeRow, Button } from 'native-base'
 import { StyleSheet, Platform } from 'react-native'
 
 import colors from '../../../../theme/colors'
@@ -49,30 +49,38 @@ export default function ItemPost() {
   )
 
   return (
-    <ListItem
-      noIndent={true}
-      button={true}
-      onPress={console.log}
+    <SwipeRow
+      disableRightSwipe={true}
+      recalculateHiddenLayout={true}
+      rightOpenValue={-75}
       style={[styles.list, stylesLit[Platform.OS]]}
-    >
-      <Left>
-        {/* <Icon
-          name="circle"
-          style={styles.circleIcon}
-          type="FontAwesome"
-        /> */}
-        {isPlatform({ platform: 'ios', isComponent: starIcon })}
-        <Text style={styles.text}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate,
-          minus delectus qui amet reprehenderit nobis officiis maxime sit quas
-          laudantium. Repellendus quo aspernatur aut alias atque quaerat.
-          Minima, molestias veniam.
-        </Text>
-        {isPlatform({ platform: 'android', isComponent: starIcon })}
-      </Left>
-      <Right>
-        {isPlatform({ platform: 'ios', isComponent: iosRightIcon })}
-      </Right>
-    </ListItem>
+      right={
+        <Button danger={true}>
+          <Icon active={true} name="trash" />
+        </Button>
+      }
+      body={
+        <View padder={true} style={{ flexDirection: 'row' }}>
+          <Left style={{ flexDirection: 'row', flex: 4 }}>
+            {/* <Icon
+              name="circle"
+              style={styles.circleIcon}
+              type="FontAwesome"
+            /> */}
+            {isPlatform({ platform: 'ios', isComponent: starIcon })}
+            <Text style={styles.text}>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Voluptate, minus delectus qui amet reprehenderit nobis officiis
+              maxime sit quas laudantium. Repellendus quo aspernatur aut alias
+              atque quaerat. Minima, molestias veniam.
+            </Text>
+            {isPlatform({ platform: 'android', isComponent: starIcon })}
+          </Left>
+          <Right style={{ flex: 1 }}>
+            {isPlatform({ platform: 'ios', isComponent: iosRightIcon })}
+          </Right>
+        </View>
+      }
+    />
   )
 }
