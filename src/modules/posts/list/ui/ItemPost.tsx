@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View, Left, Icon, Text, Right, SwipeRow, Button } from 'native-base'
-import { StyleSheet, Platform, Alert } from 'react-native'
+import { StyleSheet, Platform, Alert, TouchableOpacity } from 'react-native'
 import pathOr from 'ramda/es/pathOr'
 import { NavigationScreenProps, withNavigation } from 'react-navigation'
 
@@ -133,17 +133,19 @@ export function ItemPost({
         </Button>
       }
       body={
-        <View padder={true} style={{ flexDirection: 'row' }}>
-          <Left style={{ flexDirection: 'row', flex: 4 }}>
-            {renderIcon()}
-            <Text style={styles.text}>{pathOr('', ['title'], post)}</Text>
-            {pathOr(false, ['isFavorite'], post) &&
-              isPlatform({ platform: 'android', isComponent: starIcon })}
-          </Left>
-          <Right style={{ flex: 1 }}>
-            {isPlatform({ platform: 'ios', isComponent: iosRightIcon })}
-          </Right>
-        </View>
+        <TouchableOpacity onPress={goTo} style={{ flex: 1, marginLeft: 15 }}>
+          <View padder={true} style={{ flexDirection: 'row' }}>
+            <Left style={{ flexDirection: 'row', flex: 4 }}>
+              {renderIcon()}
+              <Text style={styles.text}>{pathOr('', ['title'], post)}</Text>
+              {pathOr(false, ['isFavorite'], post) &&
+                isPlatform({ platform: 'android', isComponent: starIcon })}
+            </Left>
+            <Right style={{ flex: 1 }}>
+              {isPlatform({ platform: 'ios', isComponent: iosRightIcon })}
+            </Right>
+          </View>
+        </TouchableOpacity>
       }
     />
   )
